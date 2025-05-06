@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/header :: head}"></head>
+<body>
+<main>
+    <a th:href="@{/}" class="btn btn-secondary mb-2">Retour à l'Accueil</a>
+
+    <h2>Liste des Commandes</h2>
+    <a th:href="@{/commandes/nouveau}">Nouvelle Commande</a>
+    <table>
+        <thead>
+        <tr>
+            <th>ID</th>
+            <th>Fournisseur</th>
+            <th>Date</th>
+            <th>Statut</th>
+            <th>Actions</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="c : ${commandes}">
+            <td th:text="${c.id}"></td>
+            <td th:text="${c.fournisseur.nom}"></td>
+            <td th:text="${c.dateCommande}"></td>
+            <td th:text="${c.statut}"></td>
+            <td>
+                <a th:href="@{/commandes/edit/{id}(id=${c.id})}">Modifier</a>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</main>
+</body>
+</html>

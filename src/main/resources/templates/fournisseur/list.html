@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/header :: head}"></head>
+
+<body>
+<div>
+    <!-- Bouton de retour vers l'accueil -->
+    <a th:href="@{/accueil}" class="btn btn-secondary mb-2">Retour à l'Accueil</a>
+
+    <h2>Liste des Commandes</h2>
+    <a th:href="@{/commandes/nouveau}" class="btn btn-primary mb-2">Ajouter une Commande</a>
+    <table class="table table-striped">
+        <thead>
+        <tr>
+            <th>Fournisseur</th>
+            <th>Date de Commande</th>
+            <th>Statut</th>
+            <th>Actions</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="c : ${commandes}">
+            <td th:text="${c.fournisseur.nom}">Nom Fournisseur</td>
+            <td th:text="${c.dateCommande}">Date Commande</td>
+            <td th:text="${c.statut}">Statut</td>
+            <td>
+                <!-- Bouton de modification avec l'ID de la commande -->
+                <a th:href="@{/commandes/edit/{id}(id=${c.id})}" class="btn btn-sm btn-warning">Modifier</a>
+                <a th:href="@{/commandes/delete/{id}(id=${c.id})}" class="btn btn-sm btn-danger">Supprimer</a>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+</body>
+</html>

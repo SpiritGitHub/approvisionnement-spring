@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/header :: head}"></head>
+<body>
+<main>
+  <a th:href="@{/}" class="btn btn-secondary mb-2">Retour à l'Accueil</a>
+
+  <h2>Modifier Commande</h2>
+
+  <form th:action="@{/commandes/enregistrer}" method="post" enctype="multipart/form-data" th:object="${commande}">
+    <input type="hidden" th:field="*{id}" />
+    <input type="hidden" th:field="*{fournisseur.id}" />
+
+    <p>Fournisseur : <strong th:text="${commande.fournisseur.nom}"></strong></p>
+
+    <div>
+      <h3>Articles</h3>
+      <div th:each="ligne : ${commande.lignes}">
+        <input type="hidden" name="articleIds" th:value="${ligne.article.id}" />
+        <span th:text="${ligne.article.nom}"></span>
+        Qté: <input type="number" name="quantites" th:value="${ligne.quantite}" min="1" required />
+        Prix: <input type="number" name="prixUnitaires" th:value="${ligne.prixUnitaire}" step="0.01" min="0" required />
+        <br/>
+      </div>
+    </div>
+
+    <label>Statut :</label>
+    <select id="statut" th:field="*{statut}" required onchange="toggleLivreeFields()">
+      <option value="EN_COURS">EN_COURS</option>
+      <option value="LIVREE">LIVREE</option>
+      <option value="ANNULEE">ANNULEE</option>
+    </select>
+
+    <div id="livree-section" style="display: none;">
+      <label>Date de Livraison :</label>
+      <input type="date" th:field="*{dateLivraison}" />
+
+      <label>Facture :</label>
+      <input type="file" name="factureFile" />
+    </div>
+
+    <script>
+      function toggleLivreeFields() {
+        const statut = document.getElementById("statut").value;
+        document.getElementById("livree-section").style.display = (statut === "LIVREE") ? "block" : "none";
+      }
+
+      document.addEventListener("DOMContentLoaded", toggleLivreeFields);
+    </script>
+
+    <button type="submit">Mettre à jour</button>
+  </form>
+</main>
+</body>
+</html>

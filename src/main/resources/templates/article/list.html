@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/header :: head}"></head>
+<body>
+<main>
+    <h2>Liste des Articles</h2>
+    <a th:href="@{/articles/nouveau}">Ajouter un Article</a>
+    <table>
+        <thead>
+        <tr>
+            <th>Nom</th>
+            <th>Catégorie</th>
+            <th>Unité</th>
+            <th>Stock</th>
+            <th>Fournisseur</th>
+            <th>Actions</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="article : ${articles}">
+            <td th:text="${article.nom}"></td>
+            <td th:text="${article.categorie}"></td>
+            <td th:text="${article.unite}"></td>
+            <td th:text="${article.stockActuel}"></td>
+            <td th:text="${article.fournisseur.nom}"></td>
+            <td>
+                <a th:href="@{'/articles/modifier/' + ${article.id}}">Modifier</a>
+                <a th:href="@{'/articles/supprimer/' + ${article.id}}">Supprimer</a>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</main>
+</body>
+</html>

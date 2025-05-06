@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/header :: head}"></head>
+<body>
+<main>
+
+    <a th:href="@{/}" class="btn btn-secondary mb-2">Retour à l'Accueil</a>
+
+    <h2>Nouvelle Commande</h2>
+
+    <!-- Sélection du fournisseur -->
+    <form th:action="@{/commandes/nouveau}" method="get">
+        <label>Fournisseur :</label>
+        <select name="fournisseurId" onchange="this.form.submit()" required>
+            <option value="">-- Sélectionner --</option>
+            <option th:each="f : ${fournisseurs}" th:value="${f.id}" th:text="${f.nom}"
+                    th:selected="${f.id == fournisseurId}">
+            </option>
+        </select>
+    </form>
+
+    <!-- Formulaire d'ajout -->
+    <form th:action="@{/commandes/enregistrer}" method="post" enctype="multipart/form-data" th:object="${commande}">
+        <input type="hidden" th:field="*{fournisseur.id}" />
+
+        <div th:if="${articles != null}">
+            <h3>Articles à approvisionner</h3>
+            <div th:each="a : ${articles}">
+                <input type="checkbox" name="articleIds" th:value="${a.id}" />
+                <span th:text="${a.nom}"></span>
+                Qté: <input type="number" name="quantites" min="1" required />
+                Prix: <input type="number" name="prixUnitaires" step="0.01" min="0" required />
+                <br/>
+            </div>
+        </div>
+
+        <label>Statut :</label>
+        <select th:field="*{statut}" required>
+            <option value="EN_COURS">EN_COURS</option>
+            <option value="LIVREE">LIVREE</option>
+            <option value="ANNULEE">ANNULEE</option>
+        </select>
+
+        <div th:if="${commande.statut == 'LIVREE'}">
+            <label>Date de Livraison :</label>
+            <input type="date" name="dateLivraison" />
+            <label>Facture :</label>
+            <input type="file" name="factureFile" />
+        </div>
+
+        <button type="submit">Enregistrer</button>
+    </form>
+</main>
+</body>
+</html>

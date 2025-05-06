@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Accueil - Gestion Approvisionnement</title>
+    <link rel="stylesheet" href="/css/style.css"> <!-- si tu veux ajouter un CSS -->
+</head>
+<body>
+<h1>Bienvenue dans l'application de gestion d'approvisionnement</h1>
+<p>Utilisez le menu pour naviguer entre les fournisseurs, articles, et commandes.</p>
+
+<ul>
+    <li><a th:href="@{/fournisseurs}">Liste des Fournisseurs</a></li>
+    <li><a th:href="@{/articles}">Liste des Articles</a></li>
+    <li><a th:href="@{/commandes}">Commandes d'Approvisionnement</a></li>
+</ul>
+</body>
+</html>
